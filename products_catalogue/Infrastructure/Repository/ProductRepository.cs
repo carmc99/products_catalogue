@@ -27,7 +27,7 @@ namespace products_catalogue.Infrastructure.Repository
             throw new NotImplementedException();
         }
 
-        public void Update(Product todoItem)
+        public void Update(Guid id, Product product)
         {
             throw new NotImplementedException();
         }
