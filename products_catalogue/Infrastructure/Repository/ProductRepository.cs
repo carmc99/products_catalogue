@@ -1,5 +1,5 @@
 ﻿using products_catalogue.Domain.Models;
-using products_catalogue.Infrastructure.Context;
+using products_catalogue.Infrastructure.DbContexts;
 using products_catalogue.Infrastructure.Repository.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -9,9 +9,9 @@ namespace products_catalogue.Infrastructure.Repository
 {
     public class ProductRepository : IProductRepository
     {
-        private readonly ProductContext dbContext;
+        private readonly InMemoryContext dbContext;
 
-        public ProductRepository(ProductContext dbContext)
+        public ProductRepository(InMemoryContext dbContext)
         {
             this.dbContext = dbContext;
         }

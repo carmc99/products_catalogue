@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using products_catalogue.App_Start;
 using products_catalogue.Controllers;
-using products_catalogue.Infrastructure.Context;
+using products_catalogue.Infrastructure.DbContexts;
 using products_catalogue.Infrastructure.Repository;
 using products_catalogue.Infrastructure.Repository.Interfaces;
 using System.Web.Http;
@@ -16,19 +16,17 @@ namespace products_catalogue
     {
         protected void Application_Start()
         {
-            var builder = new DbContextOptionsBuilder<ProductContext>();
+            var builder = new DbContextOptionsBuilder<InMemoryContext>();
             builder.UseInMemoryDatabase("Catalogue");
             var options = builder.Options;
 
             var container = new UnityContainer();
             container.RegisterInstance(options);
-            container.RegisterType<DbContext, ProductContext>();
+            container.RegisterType<DbContext, InMemoryContext>();
 
 
             // Registrar handlers y mensajes de MediatR
             MediaTrConfig.AddMediatR(container, typeof(ProductsController).Assembly);
-
-            // Registrar instancia de Mediator en el contenedor
 
             container.RegisterType<IProductRepository, ProductRepository>();
             container.RegisterType<ICategoryRepository, CategoryRepository>();
@@ -39,8 +37,5 @@ namespace products_catalogue
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
         }
-
-
-
     }
 }

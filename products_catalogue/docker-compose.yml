@@ -1,0 +1,25 @@
+﻿version: '3.9'
+
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    command: /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P "secret123" && CREATE DATABASE catalogue;
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: secret123
+    ports:
+      - "1433:1433"
+    volumes:
+      - db_data:/var/opt/mssql/data
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+
+volumes:
+  db_data:
