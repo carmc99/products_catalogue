@@ -23,8 +23,9 @@ namespace products_catalogue
             var options = builder.Options;
 
             var container = new UnityContainer();
+
             container.RegisterInstance(options);
-            container.RegisterType<DbContext, InMemoryContext>();
+            container.RegisterSingleton<DbContext, InMemoryContext>();
 
             // Configurar AutoMapper
             var mapperConfig = new MapperConfiguration(cfg =>
