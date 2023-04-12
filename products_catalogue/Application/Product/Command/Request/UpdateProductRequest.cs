@@ -1,9 +1,11 @@
-﻿using products_catalogue.Application.Category.Command.Request;
+﻿using MediatR;
+using products_catalogue.Application.Category.Command.Request;
+using products_catalogue.Domain.ViewModels;
 using System;
 
 namespace products_catalogue.Application.Product.Command.Request
 {
-    public class UpdateProductRequest
+    public class UpdateProductRequest : IRequest<ResponseViewModel<Domain.Models.Product>>
     {
         internal Guid Id { get; set; }
         public string Name { get; set; }

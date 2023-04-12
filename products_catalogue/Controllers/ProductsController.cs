@@ -60,7 +60,7 @@ namespace products_catalogue.Controllers
         // DELETE api/products/5
         public async Task<IHttpActionResult> Delete([FromUri] string id)
         {
-            var response = await this.mediator.Send(new RemoveCategoryRequest { Id = Guid.Parse(id) });
+            var response = await this.mediator.Send(new RemoveProductRequest { Id = Guid.Parse(id) });
             return Ok(response);
         }
     }
