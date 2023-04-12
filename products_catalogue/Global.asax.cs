@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using products_catalogue.App_Start;
+using products_catalogue.Controllers;
 using products_catalogue.Infrastructure.Context;
 using products_catalogue.Infrastructure.Repository;
 using products_catalogue.Infrastructure.Repository.Interfaces;
@@ -21,6 +23,13 @@ namespace products_catalogue
             var container = new UnityContainer();
             container.RegisterInstance(options);
             container.RegisterType<DbContext, ProductContext>();
+
+
+            // Registrar handlers y mensajes de MediatR
+            MediaTrConfig.AddMediatR(container, typeof(ProductsController).Assembly);
+
+            // Registrar instancia de Mediator en el contenedor
+
             container.RegisterType<IProductRepository, ProductRepository>();
             container.RegisterType<ICategoryRepository, CategoryRepository>();
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
@@ -30,5 +39,8 @@ namespace products_catalogue
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
         }
+
+
+
     }
 }

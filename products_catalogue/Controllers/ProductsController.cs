@@ -1,14 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using MediatR;
+using products_catalogue.Application.Product.Query.Request;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace products_catalogue.Controllers
 {
     public class ProductsController : ApiController
     {
-        // GET api/products
-        public IEnumerable<string> Get()
+        private readonly IMediator mediator;
+
+        public ProductsController(IMediator mediator)
         {
-            return new string[] { "value1", "value2" };
+            this.mediator = mediator;
+        }
+
+        // GET api/products
+        public async Task<IHttpActionResult> Get([FromUri] int PageNumber, [FromUri] int PageSize, [FromUri] string SortOrder)
+        {
+            var response = await this.mediator.Send(new GetAllProductsRequest { PageNumber = PageNumber, PageSize = PageSize, SortOrder = SortOrder });
+            return Ok(response);
         }
 
         // GET api/products/5

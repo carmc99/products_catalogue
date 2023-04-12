@@ -10,6 +10,6 @@ namespace products_catalogue.Infrastructure.Repository.Interfaces
         void Update(Guid id, Product product);
         void Remove(Guid id);
         Product GetById(Guid id);
-        IEnumerable<Product> GetAll(int pageNumber, int pageSize, string sortOrder);
+        IEnumerable<Product> GetAll(int pageNumber, int pageSize = 10, string sortOrder = "desc");
     }
 }

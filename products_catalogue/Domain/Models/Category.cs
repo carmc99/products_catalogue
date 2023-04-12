@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace products_catalogue.Domain.Models
 {
@@ -9,6 +10,6 @@ namespace products_catalogue.Domain.Models
         public string Description { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
-
+        public ICollection<Product> Products { get; set; }
     }
 }
