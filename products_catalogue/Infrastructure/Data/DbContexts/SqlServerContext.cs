@@ -9,8 +9,8 @@ namespace products_catalogue.Infrastructure.DbContexts
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var connectionString = ConfigurationManager.ConnectionStrings["SqlServer2017_dev_docker"].ConnectionString;
-            //TODO: connection
+            var connectionString = ConfigurationManager.ConnectionStrings["SqlServer2017_docker_dev"].ConnectionString;
+            optionsBuilder.UseSqlServer(connectionString);
             optionsBuilder.EnableSensitiveDataLogging();
         }
 

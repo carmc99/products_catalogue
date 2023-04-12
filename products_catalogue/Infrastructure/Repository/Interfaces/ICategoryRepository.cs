@@ -1,11 +1,9 @@
 ﻿using products_catalogue.Domain.Models;
-using System.Collections.Generic;
 
 namespace products_catalogue.Infrastructure.Repository.Interfaces
 {
-    public interface ICategoryRepository
+    public interface ICategoryRepository : IBaseRepository<Category>
     {
-        void Add(Category category);
-        IEnumerable<Category> GetAll(int pageNumber, int pageSize, string sortOrder);
+        //Definicion operaciones exclusivas ICategoryRepository
     }
 }

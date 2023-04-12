@@ -1,15 +1,9 @@
 ﻿using products_catalogue.Domain.Models;
-using System;
-using System.Collections.Generic;
 
 namespace products_catalogue.Infrastructure.Repository.Interfaces
 {
-    public interface IProductRepository
+    public interface IProductRepository : IBaseRepository<Product>
     {
-        void Add(Product product);
-        void Update(Guid id, Product product);
-        void Remove(Guid id);
-        Product GetById(Guid id);
-        IEnumerable<Product> GetAll(int pageNumber, int pageSize = 10, string sortOrder = "desc");
+        //Definicion operaciones exclusivas IProductRepository
     }
 }

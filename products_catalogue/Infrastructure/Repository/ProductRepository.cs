@@ -16,9 +16,10 @@ namespace products_catalogue.Infrastructure.Repository
             this.dbContext = dbContext;
         }
 
-        public void Add(Product product)
+        public void Add(Product entity)
         {
-            throw new NotImplementedException();
+            dbContext.Products.Add(entity);
+            dbContext.SaveChanges();
         }
 
         public IEnumerable<Product> GetAll(int pageNumber, int pageSize = 10, string sortOrder = "desc")
@@ -41,17 +42,32 @@ namespace products_catalogue.Infrastructure.Repository
 
         public Product GetById(Guid id)
         {
-            throw new NotImplementedException();
+            return dbContext.Products.FirstOrDefault(p => p.Id == id);
         }
 
         public void Remove(Guid id)
         {
-            throw new NotImplementedException();
+            var productToRemove = dbContext.Products.FirstOrDefault(p => p.Id == id);
+            if (productToRemove != null)
+            {
+                dbContext.Products.Remove(productToRemove);
+                dbContext.SaveChanges();
+            }
         }
 
-        public void Update(Guid id, Product product)
+        public void Update(Guid id, Product entity)
         {
-            throw new NotImplementedException();
+            var existingProduct = dbContext.Products.FirstOrDefault(p => p.Id == id);
+            if (existingProduct != null)
+            {
+                existingProduct.Name = entity.Name;
+                existingProduct.Description = entity.Description;
+                existingProduct.CategoryId = entity.CategoryId;
+                existingProduct.Image = entity.Image;
+                existingProduct.UpdatedDate = DateTime.UtcNow;
+
+                dbContext.SaveChanges();
+            }
         }
     }
 }
