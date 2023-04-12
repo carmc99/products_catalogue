@@ -1,5 +1,7 @@
 ﻿using MediatR;
+using products_catalogue.Application.Product.Command.Request;
 using products_catalogue.Application.Product.Query.Request;
+using System;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -22,24 +24,44 @@ namespace products_catalogue.Controllers
         }
 
         // GET api/products/5
-        public string Get(int id)
+        public async Task<IHttpActionResult> Get(string id)
         {
-            return "value";
+            var response = await this.mediator.Send(new GetProductByIdRequest { Id = Guid.Parse(id) });
+            return Ok(response);
         }
 
         // POST api/products
-        public void Post([FromBody] string value)
+        public async Task<IHttpActionResult> Post([FromBody] AddProductRequest request)
         {
+            var response = await this.mediator.Send(new AddProductRequest
+            {
+                Name = request.Name,
+                Description = request.Description,
+                Category = request.Category,
+                Image = request.Image,
+            });
+            return Ok(response);
         }
 
         // PUT api/products/5
-        public void Put(int id, [FromBody] string value)
+        public async Task<IHttpActionResult> Put([FromUri] string id, [FromBody] UpdateProductRequest request)
         {
+            var response = await this.mediator.Send(new UpdateProductRequest
+            {
+                Id = Guid.Parse(id),
+                Name = request.Name,
+                Description = request.Description,
+                Category = request.Category,
+                Image = request.Image,
+            });
+            return Ok(response);
         }
 
         // DELETE api/products/5
-        public void Delete(int id)
+        public async Task<IHttpActionResult> Delete([FromUri] string id)
         {
+            var response = await this.mediator.Send(new RemoveCategoryRequest { Id = Guid.Parse(id) });
+            return Ok(response);
         }
     }
 }

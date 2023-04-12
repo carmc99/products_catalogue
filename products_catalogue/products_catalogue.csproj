@@ -49,6 +49,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.10.1.1\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Extensions.Microsoft.DependencyInjection, Version=8.0.0.0, Culture=neutral, PublicKeyToken=e767ac9c89543656, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.Extensions.Microsoft.DependencyInjection.8.1.1\lib\netstandard2.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -284,7 +290,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application\Category\Command\Handler\AddCategoryHandler.cs" />
+    <Compile Include="Application\Category\Command\Handler\RemoveCategoryHandler.cs" />
     <Compile Include="Application\Category\Command\Request\AddCategoryRequest.cs" />
+    <Compile Include="Application\Category\Command\Request\RemoveCategoryRequest.cs" />
     <Compile Include="Application\Category\Query\Handler\GetAllCategoriesHandler.cs" />
     <Compile Include="Application\Category\Query\Request\GetAllCategoriesRequest.cs" />
     <Compile Include="Application\Product\Command\Handler\AddProductHandler.cs" />
@@ -303,8 +311,11 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Domain\Models\Metadata.cs" />
+    <Compile Include="Domain\Profiles\CategoryMapperProfile.cs" />
+    <Compile Include="Domain\Profiles\ProductMapperProfile.cs" />
     <Compile Include="Domain\ViewModels\ResponseViewModel.cs" />
     <Compile Include="Infrastructure\Data\DbContexts\SqlServerContext.cs" />
     <Compile Include="Infrastructure\Data\DbContexts\InMemoryContext.cs" />

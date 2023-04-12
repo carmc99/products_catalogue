@@ -1,11 +1,13 @@
-﻿using System;
+﻿using MediatR;
+using products_catalogue.Domain.ViewModels;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace products_catalogue.Application.Category.Query.Request
 {
-    public class GetAllCategoriesRequest
+    public class GetAllCategoriesRequest : IRequest<ResponseViewModel<IEnumerable<Domain.Models.Category>>>
     {
+        public int PageNumber { get; set; }
+        public int PageSize { get; set; }
+        public string SortOrder { get; set; }
     }
 }

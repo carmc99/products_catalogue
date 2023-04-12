@@ -4,6 +4,7 @@ using products_catalogue.Infrastructure.Repository.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace products_catalogue.Infrastructure.Repository
 {
@@ -16,10 +17,14 @@ namespace products_catalogue.Infrastructure.Repository
             this.dbContext = dbContext;
         }
 
-        public void Add(Category category)
+        public async Task<Category> Add(Category entity)
         {
-            dbContext.Categories.Add(category);
-            dbContext.SaveChanges();
+            entity.Id = Guid.NewGuid();
+            entity.CreatedDate = DateTime.UtcNow;
+            entity.UpdatedDate = DateTime.UtcNow;
+            await dbContext.Categories.AddAsync(entity);
+            await dbContext.SaveChangesAsync();
+            return entity;
         }
 
         public IEnumerable<Category> GetAll(int pageNumber, int pageSize, string sortOrder)
@@ -45,17 +50,17 @@ namespace products_catalogue.Infrastructure.Repository
             return dbContext.Categories.FirstOrDefault(c => c.Id == id);
         }
 
-        public void Remove(Guid id)
+        public async void Remove(Guid id)
         {
             var categoryToRemove = dbContext.Categories.FirstOrDefault(c => c.Id == id);
             if (categoryToRemove != null)
             {
                 dbContext.Categories.Remove(categoryToRemove);
-                dbContext.SaveChanges();
+                await dbContext.SaveChangesAsync();
             }
         }
 
-        public void Update(Guid id, Category entity)
+        public async Task<Category> Update(Guid id, Category entity)
         {
             var existingCategory = dbContext.Categories.FirstOrDefault(c => c.Id == id);
             if (existingCategory != null)
@@ -64,8 +69,10 @@ namespace products_catalogue.Infrastructure.Repository
                 existingCategory.Description = entity.Description;
                 existingCategory.UpdatedDate = DateTime.UtcNow;
 
-                dbContext.SaveChanges();
+                await dbContext.SaveChangesAsync();
             }
+
+            return existingCategory;
         }
     }
 

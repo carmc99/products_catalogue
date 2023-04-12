@@ -4,6 +4,7 @@ using products_catalogue.Infrastructure.Repository.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace products_catalogue.Infrastructure.Repository
 {
@@ -16,10 +17,14 @@ namespace products_catalogue.Infrastructure.Repository
             this.dbContext = dbContext;
         }
 
-        public void Add(Product entity)
+        public async Task<Product> Add(Product entity)
         {
-            dbContext.Products.Add(entity);
-            dbContext.SaveChanges();
+            entity.Id = Guid.NewGuid();
+            entity.CreatedDate = DateTime.UtcNow;
+            entity.UpdatedDate = DateTime.UtcNow;
+            await dbContext.Products.AddAsync(entity);
+            await dbContext.SaveChangesAsync();
+            return entity;
         }
 
         public IEnumerable<Product> GetAll(int pageNumber, int pageSize = 10, string sortOrder = "desc")
@@ -55,7 +60,7 @@ namespace products_catalogue.Infrastructure.Repository
             }
         }
 
-        public void Update(Guid id, Product entity)
+        public async Task<Product> Update(Guid id, Product entity)
         {
             var existingProduct = dbContext.Products.FirstOrDefault(p => p.Id == id);
             if (existingProduct != null)
@@ -66,8 +71,9 @@ namespace products_catalogue.Infrastructure.Repository
                 existingProduct.Image = entity.Image;
                 existingProduct.UpdatedDate = DateTime.UtcNow;
 
-                dbContext.SaveChanges();
+                await dbContext.SaveChangesAsync();
             }
+            return existingProduct;
         }
     }
 }
