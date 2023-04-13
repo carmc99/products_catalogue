@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
 using products_catalogue.Application.Category.Command.Request;
+using products_catalogue.Domain.Models;
 using products_catalogue.Domain.ViewModels;
 using products_catalogue.Infrastructure.Repository.Interfaces;
 using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -26,6 +28,12 @@ namespace products_catalogue.Application.Category.Command.Handler
             var response = await this.repository.Add(mappedCategory);
             return new ResponseViewModel<Domain.Models.Category>
             {
+                Metadata = new Metadata
+                {
+                    Action = "Add_category",
+                    StatusCode = (int)HttpStatusCode.OK,
+                    Message = $"Success"
+                },
                 Payload = response
             };
         }

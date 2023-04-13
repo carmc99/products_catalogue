@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using products_catalogue.Application.Category.Command.Request;
 using products_catalogue.Application.Category.Query.Request;
+using products_catalogue.Domain.Enums;
 using products_catalogue.Utils;
 using System;
 using System.Threading.Tasks;
@@ -18,9 +19,21 @@ namespace products_catalogue.Controllers
         }
 
         // GET api/categories
-        public async Task<IHttpActionResult> Get([FromUri] int PageNumber, [FromUri] int PageSize, [FromUri] string SortOrder)
+        public async Task<IHttpActionResult> Get([FromUri] int PageNumber, [FromUri] int PageSize, [FromUri] string SortBy, [FromUri] string SortOrder)
         {
-            var response = await this.mediator.Send(new GetAllCategoriesRequest { PageNumber = PageNumber, PageSize = PageSize, SortOrder = SortOrder });
+            if (PageNumber <= 0 || PageSize <= 0
+                || !EnumExtensions.IsValid<SortBy>(SortBy)
+                || !EnumExtensions.IsValid<OrderByDirection>(SortOrder))
+            {
+                return BadRequest("Filter not valid");
+            }
+            var response = await this.mediator.Send(new GetAllCategoriesRequest
+            {
+                PageNumber = PageNumber,
+                PageSize = PageSize,
+                SortBy = SortBy,
+                SortOrder = SortOrder
+            });
             return Ok(response);
         }
 

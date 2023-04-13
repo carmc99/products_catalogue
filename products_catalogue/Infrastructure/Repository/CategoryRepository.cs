@@ -1,4 +1,5 @@
-﻿using products_catalogue.Domain.Models;
+﻿using products_catalogue.Domain.Enums;
+using products_catalogue.Domain.Models;
 using products_catalogue.Infrastructure.DbContexts;
 using products_catalogue.Infrastructure.Repository.Interfaces;
 using System;
@@ -27,17 +28,17 @@ namespace products_catalogue.Infrastructure.Repository
             return entity;
         }
 
-        public IEnumerable<Category> GetAll(int pageNumber, int pageSize, string sortOrder)
+        public IEnumerable<Category> GetAll(int pageNumber, int pageSize = 10, SortBy sortBy = SortBy.Name, OrderByDirection orderByDirection = OrderByDirection.Descending)
         {
             var items = dbContext.Categories.AsQueryable();
 
-            if (sortOrder.ToLower() == "desc")
+            switch (sortBy)
             {
-                items = items.OrderByDescending(c => c.Name);
-            }
-            else
-            {
-                items = items.OrderBy(c => c.Name);
+                case SortBy.Name:
+                    items = orderByDirection == OrderByDirection.Ascending ? items.OrderBy(t => t.Name) : items.OrderByDescending(t => t.Name);
+                    break;
+                default:
+                    throw new ArgumentException("Invalid SortBy value.");
             }
 
             return items.Skip((pageNumber - 1) * pageSize)
