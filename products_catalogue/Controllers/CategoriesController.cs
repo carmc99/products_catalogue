@@ -19,20 +19,20 @@ namespace products_catalogue.Controllers
         }
 
         // GET api/categories
-        public async Task<IHttpActionResult> Get([FromUri] int PageNumber, [FromUri] int PageSize, [FromUri] string SortBy, [FromUri] string SortOrder)
+        public async Task<IHttpActionResult> Get([FromUri] int pageNumber, [FromUri] int pageSize, [FromUri] string sortBy, [FromUri] string sortOrder)
         {
-            if (PageNumber <= 0 || PageSize <= 0
-                || !EnumExtensions.IsValid<SortBy>(SortBy)
-                || !EnumExtensions.IsValid<OrderByDirection>(SortOrder))
+            if (pageNumber <= 0 || pageSize <= 0
+                || !EnumExtensions.IsValid<SortBy>(sortBy)
+                || !EnumExtensions.IsValid<OrderByDirection>(sortOrder))
             {
                 return BadRequest("Filter not valid");
             }
             var response = await this.mediator.Send(new GetAllCategoriesRequest
             {
-                PageNumber = PageNumber,
-                PageSize = PageSize,
-                SortBy = SortBy,
-                SortOrder = SortOrder
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                SortBy = sortBy,
+                SortOrder = sortOrder
             });
             return Ok(response);
         }

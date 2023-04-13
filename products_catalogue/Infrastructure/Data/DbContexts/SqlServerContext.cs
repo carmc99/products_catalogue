@@ -21,7 +21,14 @@ namespace products_catalogue.Infrastructure.DbContexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Category>()
-                .HasMany<Product>(p => p.Products);
+                .HasMany<Product>(p => p.Products)
+                .WithOne(p => p.Category)
+                .HasForeignKey(p => p.Id);
+
+            modelBuilder.Entity<Product>()
+                .HasOne<Category>(c => c.Category)
+                .WithMany(p => p.Products)
+                .HasForeignKey(p => p.CategoryId);
 
             modelBuilder.Seed();
         }

@@ -1,4 +1,5 @@
-﻿using products_catalogue.Domain.Enums;
+﻿using Microsoft.EntityFrameworkCore;
+using products_catalogue.Domain.Enums;
 using products_catalogue.Domain.Models;
 using products_catalogue.Infrastructure.DbContexts;
 using products_catalogue.Infrastructure.Repository.Interfaces;
@@ -28,14 +29,14 @@ namespace products_catalogue.Infrastructure.Repository
             return entity;
         }
 
-        public IEnumerable<Category> GetAll(int pageNumber, int pageSize = 10, SortBy sortBy = SortBy.Name, OrderByDirection orderByDirection = OrderByDirection.Descending)
+        public IEnumerable<Category> GetAll(int pageNumber, int pageSize = 10, SortBy sortBy = SortBy.Name, OrderByDirection orderByDirection = OrderByDirection.Desc)
         {
-            var items = dbContext.Categories.AsQueryable();
+            var items = dbContext.Categories.Include(c => c.Products).AsQueryable();
 
             switch (sortBy)
             {
                 case SortBy.Name:
-                    items = orderByDirection == OrderByDirection.Ascending ? items.OrderBy(t => t.Name) : items.OrderByDescending(t => t.Name);
+                    items = orderByDirection == OrderByDirection.Asc ? items.OrderBy(t => t.Name) : items.OrderByDescending(t => t.Name);
                     break;
                 default:
                     throw new ArgumentException("Invalid SortBy value.");

@@ -48,6 +48,13 @@ namespace products_catalogue
 
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
 
+            // Config para ignorar la referencia que apunta de nuevo al objeto, cuando existen
+            // relaciones entre tablas.
+            HttpConfiguration config = GlobalConfiguration.Configuration;
+            config.Formatters.JsonFormatter
+            .SerializerSettings
+            .ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

@@ -11,6 +11,6 @@ namespace products_catalogue.Infrastructure.Repository.Interfaces
         Task<T> Update(Guid id, T entity);
         void Remove(Guid id);
         T GetById(Guid id);
-        IEnumerable<T> GetAll(int pageNumber, int pageSize = 10, SortBy sortBy = SortBy.Name, OrderByDirection orderByDirection = OrderByDirection.Descending);
+        IEnumerable<T> GetAll(int pageNumber, int pageSize = 10, SortBy sortBy = SortBy.Name, OrderByDirection orderByDirection = OrderByDirection.Desc);
     }
 }
