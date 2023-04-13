@@ -10,9 +10,9 @@ namespace products_catalogue.Infrastructure.Repository
 {
     public class CategoryRepository : ICategoryRepository
     {
-        private readonly InMemoryContext dbContext;
+        private readonly SqlServerContext dbContext;
 
-        public CategoryRepository(InMemoryContext dbContext)
+        public CategoryRepository(SqlServerContext dbContext)
         {
             this.dbContext = dbContext;
         }
@@ -47,6 +47,10 @@ namespace products_catalogue.Infrastructure.Repository
 
         public Category GetById(Guid id)
         {
+            if (id == Guid.Empty)
+            {
+                return null;
+            }
             return dbContext.Categories.FirstOrDefault(c => c.Id == id);
         }
 

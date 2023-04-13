@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using products_catalogue.Application.Category.Command.Request;
 using products_catalogue.Application.Category.Query.Request;
+using products_catalogue.Utils;
 using System;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -26,6 +27,11 @@ namespace products_catalogue.Controllers
         // POST api/categories
         public async Task<IHttpActionResult> Post([FromBody] AddCategoryRequest request)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var response = await this.mediator.Send(new AddCategoryRequest
             {
                 Name = request.Name,
@@ -37,6 +43,10 @@ namespace products_catalogue.Controllers
         // DELETE api/categories/5
         public async Task<IHttpActionResult> Delete([FromUri] string id)
         {
+            if (string.IsNullOrEmpty(id) || !GuidParser.IsValidGuid(id))
+            {
+                return BadRequest("Valid category Id is required.");
+            }
             var response = await this.mediator.Send(new RemoveCategoryRequest { Id = Guid.Parse(id) });
             return Ok(response);
         }

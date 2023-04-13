@@ -10,9 +10,9 @@ namespace products_catalogue.Infrastructure.Repository
 {
     public class ProductRepository : IProductRepository
     {
-        private readonly InMemoryContext dbContext;
+        private readonly SqlServerContext dbContext;
 
-        public ProductRepository(InMemoryContext dbContext)
+        public ProductRepository(SqlServerContext dbContext)
         {
             this.dbContext = dbContext;
         }
@@ -47,6 +47,10 @@ namespace products_catalogue.Infrastructure.Repository
 
         public Product GetById(Guid id)
         {
+            if (id == Guid.Empty)
+            {
+                return null;
+            }
             return dbContext.Products.FirstOrDefault(p => p.Id == id);
         }
 

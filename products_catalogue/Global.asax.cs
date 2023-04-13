@@ -18,14 +18,14 @@ namespace products_catalogue
     {
         protected void Application_Start()
         {
-            var builder = new DbContextOptionsBuilder<InMemoryContext>();
-            builder.UseInMemoryDatabase("Catalogue");
-            var options = builder.Options;
+            //var builder = new DbContextOptionsBuilder<InMemoryContext>();
+            //builder.UseInMemoryDatabase("Catalogue");
+            //var options = builder.Options;
 
             var container = new UnityContainer();
 
-            container.RegisterInstance(options);
-            container.RegisterSingleton<DbContext, InMemoryContext>();
+            //container.RegisterInstance(options);
+            container.RegisterSingleton<DbContext, SqlServerContext>();
 
             // Configurar AutoMapper
             var mapperConfig = new MapperConfiguration(cfg =>
@@ -36,6 +36,8 @@ namespace products_catalogue
             container.RegisterInstance(mapperConfig.CreateMapper());
 
             // Registrar handlers y mensajes de MediatR
+            // Registrara todos handlers que esten en la misma ubicacion del emsanblado
+            // de ProductsController, asi que no es necesario agregar mas referencias.
             MediaTrConfig.AddMediatR(container, typeof(ProductsController).Assembly);
 
 
