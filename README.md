@@ -55,16 +55,18 @@ A
 
 ```
 
+
+
 - Para crear un servidor de base de datos que contenga toda la informacion necesaria que usara la api, ejecute el siguiente comando en `products_catalogue\products_catalogue`, 
 asegurese de estar en el mismo directorio donde se encuentra el archivo docker-compose.yml
 
 ```
 docker-compose up
 ```
-
+**Esta opcion puede requerir un alto uso de memoria, debido al tamano de la imagen de **SqlServer 2017.**
 **Nota**: En el direcotrio scripts/db_scripts.sql se encuentran todas las intrucciones necesarias para crear la db, tablas y registros de ejemplo.
 
-#### Testing y Swagger
+#### Testing, documentacion y trazabilidad
 
 - Para acceder a las rutas de la api y su documentacion, es posible usar swagger, para ello dirijase a la siguiente url, una vez ejecute la aplicacion.
 ```
@@ -72,3 +74,6 @@ https://localhost:puerto/swagger
 ```
 
 - Para ejecutar las pruebas unitarias, dirijase a `products_catalogue.Test`
+
+- La aplicacion hace uso de la libreria `Serilog` para generar logs y llevar trazabilidad.
+**Nota**: Los logs por defecto se almacenan en la ruta **C:/catalogue_logs.txt**.
