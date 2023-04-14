@@ -3,6 +3,7 @@
 services:
   db:
     image: mcr.microsoft.com/mssql/server:2017-latest
+    container_name: catalogue_db_container
     build: 
         context: .
         dockerfile: Dockerfile
@@ -19,5 +20,14 @@ services:
       - ./data:/var/opt/mssql/data
       - ./log:/var/opt/mssql/log
       - ./scripts:/scripts
+  api:
+    container_name: catalogue_api_container
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    ports:
+      - "80:80"
+    depends_on:
+      - db
 volumes:
   db_data:

@@ -371,6 +371,7 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Dockerfile.api" />
     <None Include="packages.config" />
   </ItemGroup>
   <PropertyGroup>

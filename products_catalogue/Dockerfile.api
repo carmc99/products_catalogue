@@ -1,0 +1,22 @@
+#Depending on the operating system of the host machines(s) that will build or run the containers, the image specified in the FROM statement may need to be changed.
+#For more information, please see https://aka.ms/containercompat 
+
+# Utilizamos la imagen de Microsoft que tiene preinstalado el .NET Framework 4.7 y IIS.
+FROM mcr.microsoft.com/dotnet/framework/aspnet:4.8
+WORKDIR /app
+
+# copy csproj and restore as distinct layers
+COPY *.sln .
+COPY <path-to>/*.csproj ./<path-to>/
+COPY <path-to>/*.config ./<path-to>/
+RUN nuget restore
+
+# copy everything else and build app
+COPY <path-to>/. ./<path-to>/
+WORKDIR /app/<path-to>
+RUN msbuild /p:Configuration=Release
+
+
+FROM mcr.microsoft.com/dotnet/framework/aspnet:4.8
+WORKDIR /inetpub/wwwroot
+COPY --from=build /app/<path-to>/. ./
