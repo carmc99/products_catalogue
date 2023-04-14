@@ -1,14 +1,15 @@
-#Depending on the operating system of the host machines(s) that will build or run the containers, the image specified in the FROM statement may need to be changed.
-#For more information, please see https://aka.ms/containercompat 
-
 FROM mcr.microsoft.com/mssql/server:2017-latest
-
-COPY ./scripts /scripts
-
-WORKDIR /scripts
 
 ENV MSSQL_DATA_DIR /var/opt/mssql/data
 ENV MSSQL_LOG_DIR /var/opt/mssql/log
+# Crea un directorio nuevo
+#WORKDIR /scripts
+# Copiar el script de configuración de la base de datos al contenedor
+COPY scripts/db_script.sql scripts/db_script.sql
 
-# Ejecutar el script SQL al iniciar el contenedor
-CMD /opt/mssql-tools/bin/sqlcmd -S $MSSQL_SERVER -U sa -P $MSSQL_SA_PASSWORD -i /scripts/db_script.sql
+# Crear un archivo de script de entrada
+COPY scripts/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+# Ejecutar el script de entrada al iniciar el contenedor
+ENTRYPOINT ["/entrypoint.sh"]
