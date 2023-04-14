@@ -10,7 +10,7 @@ services:
     environment:
       ACCEPT_EULA: Y
       SA_PASSWORD: Secret123*+
-      MSSQL_SERVER: catalogue_server
+      MSSQL_SERVER: localhost
       MSSQL_PID: Express
       MSSQL_DATA_DIR: /var/opt/mssql/data
       MSSQL_LOG_DIR: /var/opt/mssql/log
@@ -20,14 +20,5 @@ services:
       - ./data:/var/opt/mssql/data
       - ./log:/var/opt/mssql/log
       - ./scripts:/scripts
-  api:
-    container_name: catalogue_api_container
-    build:
-      context: .
-      dockerfile: Dockerfile.api
-    ports:
-      - "80:80"
-    depends_on:
-      - db
 volumes:
   db_data:
