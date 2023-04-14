@@ -7,6 +7,10 @@ asi como utilizar una base de datos en memoria.
 
 Los usuarios pueden ordenar los productos por nombre o categoría y también de forma ascendente o descendente.
 
+#### Diagrama de componentes:
+
+![diagram](https://raw.githubusercontent.com/carmc99/products_catalogue/main/docs/components_diagram.svg)
+
 
 - Para ejecutar la aplicación usando su propio string de conexion, modifiquelo en Web.config
 
