@@ -3,13 +3,14 @@
 services:
   db:
     image: mcr.microsoft.com/mssql/server:2017-latest
+    container_name: catalogue_db_container
     build: 
         context: .
         dockerfile: Dockerfile
     environment:
       ACCEPT_EULA: Y
       SA_PASSWORD: Secret123*+
-      MSSQL_SERVER: catalogue_server
+      MSSQL_SERVER: localhost
       MSSQL_PID: Express
       MSSQL_DATA_DIR: /var/opt/mssql/data
       MSSQL_LOG_DIR: /var/opt/mssql/log
