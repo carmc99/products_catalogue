@@ -6,6 +6,7 @@ using products_catalogue.Domain.Profiles;
 using products_catalogue.Infrastructure.DbContexts;
 using products_catalogue.Infrastructure.Repository;
 using products_catalogue.Infrastructure.Repository.Interfaces;
+using Serilog;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -18,11 +19,22 @@ namespace products_catalogue
     {
         protected void Application_Start()
         {
+            // Configura Serilog
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .WriteTo.Console()
+                .WriteTo.File("C:/catalogue_logs.txt", rollingInterval: RollingInterval.Day)
+                .CreateLogger();
+
+
+            var container = new UnityContainer();
+
+            // In memory database config
             //var builder = new DbContextOptionsBuilder<InMemoryContext>();
             //builder.UseInMemoryDatabase("Catalogue");
             //var options = builder.Options;
 
-            var container = new UnityContainer();
+
 
             //container.RegisterInstance(options);
             container.RegisterSingleton<DbContext, SqlServerContext>();
@@ -59,6 +71,11 @@ namespace products_catalogue
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+        }
+
+        protected void Application_End()
+        {
+            Log.CloseAndFlush();
         }
     }
 }

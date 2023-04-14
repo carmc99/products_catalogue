@@ -1,8 +1,10 @@
 ﻿using MediatR;
+using products_catalogue.App_Start;
 using products_catalogue.Application.Category.Command.Request;
 using products_catalogue.Application.Category.Query.Request;
 using products_catalogue.Domain.Enums;
 using products_catalogue.Utils;
+using Serilog;
 using System;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -12,10 +14,11 @@ namespace products_catalogue.Controllers
     public class CategoriesController : ApiController
     {
         private readonly IMediator mediator;
-
+        private readonly ILogger logger;
         public CategoriesController(IMediator mediator)
         {
             this.mediator = mediator;
+            this.logger = ApplicationLogging.Logger;
         }
 
         // GET api/categories
@@ -25,6 +28,7 @@ namespace products_catalogue.Controllers
                 || !EnumExtensions.IsValid<SortBy>(sortBy)
                 || !EnumExtensions.IsValid<OrderByDirection>(sortOrder))
             {
+                logger.Warning("CategoriesController|GetAll: Filtro no valido");
                 return BadRequest("Filter not valid");
             }
             var response = await this.mediator.Send(new GetAllCategoriesRequest
@@ -34,6 +38,7 @@ namespace products_catalogue.Controllers
                 SortBy = sortBy,
                 SortOrder = sortOrder
             });
+            logger.Information("CategoriesController|GetAll: Operacion completada con exito");
             return Ok(response);
         }
 
@@ -42,6 +47,7 @@ namespace products_catalogue.Controllers
         {
             if (!ModelState.IsValid)
             {
+                logger.Warning("CategoriesController|Post: Modelo no valido");
                 return BadRequest(ModelState);
             }
 
@@ -50,6 +56,7 @@ namespace products_catalogue.Controllers
                 Name = request.Name,
                 Description = request.Description,
             });
+            logger.Information("CategoriesController|GetAll: Operacion completada con exito");
             return Ok(response);
         }
 
@@ -58,9 +65,11 @@ namespace products_catalogue.Controllers
         {
             if (string.IsNullOrEmpty(id) || !GuidParser.IsValidGuid(id))
             {
+                logger.Warning("CategoriesController|Delete: Se recibio un ID de categoria no valido");
                 return BadRequest("Valid category Id is required.");
             }
             var response = await this.mediator.Send(new RemoveCategoryRequest { Id = Guid.Parse(id) });
+            logger.Information("CategoriesController|GetAll: Operacion completada con exito");
             return Ok(response);
         }
     }

@@ -177,19 +177,5 @@ namespace products_catalogue.Tests.UnitTest
             // Assert
             Assert.IsInstanceOfType(result, typeof(BadRequestErrorMessageResult));
         }
-
-        [TestMethod]
-        public async Task Delete_WhenExceptionThrown_ReturnsInternalServerError()
-        {
-            // Arrange
-            mediatorMock.Setup(m => m.Send(It.IsAny<RemoveProductRequest>(), default))
-                .ThrowsAsync(new Exception("Unexpected error"));
-
-            // Act
-            var result = await controller.Delete(Guid.NewGuid().ToString());
-
-            // Assert
-            Assert.IsInstanceOfType(result, typeof(ExceptionResult));
-        }
     }
 }

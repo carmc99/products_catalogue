@@ -1,10 +1,12 @@
 ﻿using MediatR;
+using products_catalogue.App_Start;
 using products_catalogue.Application.Product.Command.Request;
 using products_catalogue.Application.Product.Query.Request;
 using products_catalogue.Domain.Enums;
 using products_catalogue.Domain.Models;
 using products_catalogue.Domain.ViewModels;
 using products_catalogue.Utils;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -16,10 +18,11 @@ namespace products_catalogue.Controllers
     public class ProductsController : ApiController
     {
         private readonly IMediator mediator;
-
+        private readonly ILogger logger;
         public ProductsController(IMediator mediator)
         {
             this.mediator = mediator;
+            this.logger = ApplicationLogging.Logger;
         }
 
         // GET api/products
@@ -30,6 +33,7 @@ namespace products_catalogue.Controllers
                 || !EnumExtensions.IsValid<SortBy>(sortBy)
                 || !EnumExtensions.IsValid<OrderByDirection>(sortOrder))
             {
+                logger.Warning("ProductController|GetAll: Filtro no valido");
                 return BadRequest("Filter not valid");
             }
             var response = await this.mediator.Send(new GetAllProductsRequest
@@ -39,6 +43,7 @@ namespace products_catalogue.Controllers
                 SortBy = sortBy,
                 SortOrder = sortOrder
             });
+            logger.Information("CategoriesController|GetAll: Operacion completada con exito");
             return Ok(response);
         }
 
@@ -48,9 +53,11 @@ namespace products_catalogue.Controllers
         {
             if (string.IsNullOrEmpty(id) || !GuidParser.IsValidGuid(id))
             {
+                logger.Warning("ProductController|Get: Se recibio un ID de producto no valido");
                 return BadRequest("Valid product Id is required.");
             }
             var response = await this.mediator.Send(new GetProductByIdRequest { Id = Guid.Parse(id) });
+            logger.Information("CategoriesController|GetAll: Operacion completada con exito");
             return Ok(response);
         }
 
@@ -60,6 +67,7 @@ namespace products_catalogue.Controllers
         {
             if (!ModelState.IsValid || !GuidParser.IsValidGuid(request.CategoryId))
             {
+                logger.Warning("ProductController|Post: Modelo no valido");
                 return BadRequest(ModelState);
             }
 
@@ -70,6 +78,7 @@ namespace products_catalogue.Controllers
                 CategoryId = request.CategoryId,
                 Image = request.Image,
             });
+            logger.Information("CategoriesController|GetAll: Operacion completada con exito");
             return Ok(response);
         }
 
@@ -79,10 +88,12 @@ namespace products_catalogue.Controllers
         {
             if (!ModelState.IsValid)
             {
+                logger.Warning("ProductController|Put: Modelo no valido");
                 return BadRequest(ModelState);
             }
             if (string.IsNullOrEmpty(id) || !GuidParser.IsValidGuid(id))
             {
+                logger.Warning("ProductController|Put: Se recibio un ID de producto no valido");
                 return BadRequest("Valid product Id is required.");
             }
 
@@ -94,6 +105,7 @@ namespace products_catalogue.Controllers
                 CategoryId = request.CategoryId,
                 Image = request.Image,
             });
+            logger.Information("CategoriesController|GetAll: Operacion completada con exito");
             return Ok(response);
         }
 
@@ -103,9 +115,11 @@ namespace products_catalogue.Controllers
         {
             if (string.IsNullOrEmpty(id) || !GuidParser.IsValidGuid(id))
             {
+                logger.Warning("ProductController|Delete: Se recibio un ID de producto no valido");
                 return BadRequest("Valid product Id is required.");
             }
             var response = await this.mediator.Send(new RemoveProductRequest { Id = Guid.Parse(id) });
+            logger.Information("CategoriesController|GetAll: Operacion completada con exito");
             return Ok(response);
         }
     }
