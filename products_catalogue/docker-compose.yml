@@ -11,7 +11,7 @@ services:
       ACCEPT_EULA: Y
       SA_PASSWORD: Secret123*+
       MSSQL_SERVER: localhost
-      MSSQL_PID: Express
+      MSSQL_PID: Developer
       MSSQL_DATA_DIR: /var/opt/mssql/data
       MSSQL_LOG_DIR: /var/opt/mssql/log
     ports:
