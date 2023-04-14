@@ -295,6 +295,8 @@
     <Compile Include="Application\Category\Command\Request\RemoveCategoryRequest.cs" />
     <Compile Include="Application\Category\Query\Handler\GetAllCategoriesHandler.cs" />
     <Compile Include="Application\Category\Query\Request\GetAllCategoriesRequest.cs" />
+    <Compile Include="Application\Middleware\ExceptionHandlingMiddleware.cs" />
+    <Compile Include="Application\Middleware\InternalServerErrorTextPlainResult.cs" />
     <Compile Include="Application\Product\Command\Handler\AddProductHandler.cs" />
     <Compile Include="Application\Product\Command\Handler\RemoveProductHandler.cs" />
     <Compile Include="Application\Product\Command\Handler\UpdateProductHandler.cs" />
