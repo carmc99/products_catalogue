@@ -1,0 +1,23 @@
+﻿version: '3.9'
+
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    build: 
+        context: .
+        dockerfile: Dockerfile
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: Secret123*+
+      MSSQL_SERVER: catalogue_server
+      MSSQL_PID: Express
+      MSSQL_DATA_DIR: /var/opt/mssql/data
+      MSSQL_LOG_DIR: /var/opt/mssql/log
+    ports:
+      - "1433:1433"
+    volumes:
+      - ./data:/var/opt/mssql/data
+      - ./log:/var/opt/mssql/log
+      - ./scripts:/scripts
+volumes:
+  db_data:

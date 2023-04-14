@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using products_catalogue.Application.Middleware;
 using System.Web.Http;
+using System.Web.Http.ExceptionHandling;
 
 namespace products_catalogue
 {
@@ -13,6 +12,9 @@ namespace products_catalogue
 
             // Rutas de Web API
             config.MapHttpAttributeRoutes();
+
+            // Middleware para el manejo de excepciones no controladas
+            config.Services.Replace(typeof(IExceptionHandler), new ExceptionHandlingMiddleware());
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
