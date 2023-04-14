@@ -7,6 +7,7 @@
 sleep 15s
 
 # Ejecutar los comandos SQL
+/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "Secret123*+" -Q "CREATE DATABASE Catalogue;"
 /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "Secret123*+" -i /scripts/db_script.sql
 
 # Mantener el contenedor en ejecución
