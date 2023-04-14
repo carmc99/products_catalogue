@@ -91,7 +91,7 @@ namespace products_catalogue.Controllers
                 Id = Guid.Parse(id),
                 Name = request.Name,
                 Description = request.Description,
-                Category = request.Category,
+                CategoryId = request.CategoryId,
                 Image = request.Image,
             });
             return Ok(response);

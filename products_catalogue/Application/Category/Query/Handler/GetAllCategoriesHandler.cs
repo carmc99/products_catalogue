@@ -23,7 +23,7 @@ namespace products_catalogue.Application.Category.Query.Handler
         public async Task<ResponseViewModel<IEnumerable<Domain.Models.Category>>> Handle(GetAllCategoriesRequest request, CancellationToken cancellationToken)
         {
             SortBy sortBy = EnumExtensions.StringToEnum<SortBy>(request.SortBy);
-            OrderByDirection orderByDirection = EnumExtensions.StringToEnum<OrderByDirection>(request.SortBy);
+            OrderByDirection orderByDirection = EnumExtensions.StringToEnum<OrderByDirection>(request.SortOrder);
             var result = this.repository.GetAll(request.PageNumber, request.PageSize, sortBy, orderByDirection);
 
             return new ResponseViewModel<IEnumerable<Domain.Models.Category>> { Payload = result };
