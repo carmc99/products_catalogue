@@ -61,10 +61,14 @@ A
 asegurese de estar en el mismo directorio donde se encuentra el archivo docker-compose.yml
 
 ```
-docker-compose up
+1. docker compose build
 ```
-**Esta opcion puede requerir un alto uso de memoria, debido al tamano de la imagen de **SqlServer 2017.**
-**Nota**: En el direcotrio scripts/db_scripts.sql se encuentran todas las intrucciones necesarias para crear la db, tablas y registros de ejemplo.
+```
+2. docker compose up
+```
+**Esta opcion puede requerir un alto uso de memoria, debido al tamano de la imagen de **SqlServer 2017**.**
+
+- **Nota**: En el direcotrio scripts/db_scripts.sql se encuentran todas las intrucciones necesarias para crear la db, tablas y registros de ejemplo.
 
 #### Testing, documentacion y trazabilidad
 
