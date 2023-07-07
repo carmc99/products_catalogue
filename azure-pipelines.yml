@@ -62,7 +62,17 @@ stages:
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact: Binaries'
       inputs:
-        PathtoPublish: $(Build.ArtifactStagingDirectory)/Binaries/Binaries.zip
+        PathtoPublish: $(Build.ArtifactStagingDirectory)/Binaries
         ArtifactName: Binaries
         publishLocation: 'FilePath'
         TargetPath: '$(Build.ArtifactStagingDirectory)/publish'
+  
+    - download: current
+      displayName: 'Download Binaries'
+      artifact: Binaries
+    
+    - task: ExtractFiles@1
+      displayName: 'Extract Binaries'
+      inputs:
+        archiveFilePatterns: '$(Build.ArtifactStagingDirectory)/Binaries/Binaries.zip'
+        destinationFolder: '$(Build.ArtifactStagingDirectory)/Binaries/Extracted'
