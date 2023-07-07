@@ -70,7 +70,7 @@ stages:
     - task: PublishPipelineArtifact@1
       displayName: 'Publish Artifact'
       inputs:
-        targetPath: '$(Build.ArtifactStagingDirectory)/artifacts'
+        targetPath: $(Build.ArtifactStagingDirectory)/Binaries
         artifactName: 'Binaries'
 
     - task: DownloadPipelineArtifact@2
