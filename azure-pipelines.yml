@@ -1,42 +1,48 @@
-# ASP.NET Core (.NET Framework)
-# Build and test ASP.NET Core projects targeting the full .NET Framework.
-# Add steps that publish symbols, save build artifacts, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+# Docker
+# Build a Docker image
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
 trigger:
-- main
+- none
 
 pool:
-  vmImage: 'Self hosted agent'
+  name: "Default"
+  
+resources:
+- repo: self
 
 variables:
-  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
+  tag: '$(Build.BuildId)'
 
-steps:
-- task: NuGetToolInstaller@1
+stages:
+- stage: Build
+  displayName: Build image
+  jobs:
+  - job: Build
+    displayName: Build
+    steps:
+    - task: NuGetToolInstaller@1
+      displayName: 'Use NuGet'
+   
+    - task: NuGetCommand@2
+      displayName: 'NuGet restore'
+      inputs:
+        restoreSolution: $(Build.SourcesDirectory)/products_catalogue.sln
+        verbosityRestore: Quiet
 
-- task: UseDotNet@2
-  displayName: "Install .NET Framework"
-  inputs:
-    packageType: "sdk"
-    version: "4.8.x"
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet restore'
+      inputs:
+        command: restore
+        projects: $(Build.SourcesDirectory)/products_catalogue.sln
+        verbosityRestore: Minimal
 
-- task: DotNetCoreCLI@2
-  displayName: "Restore packages"
-  inputs:
-    command: "restore"
-    projects: '$(solution)'
-
-- task: VSBuild@1
-  inputs:
-    solution: '$(solution)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
-
-- task: VSTest@2
-  inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    - task: VSBuild@1
+      displayName: 'Build solution'
+      inputs:
+        solution: $(Build.SourcesDirectory)/products_catalogue.sln
+        platform: 'Any CPU'
+        configuration: 'Release'
+        maximumCpuCount: true
+        msbuildArchitecture: x64
+        logProjectEvents: false
