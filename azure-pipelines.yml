@@ -65,4 +65,4 @@ stages:
         PathtoPublish: $(Build.ArtifactStagingDirectory)/Binaries
         ArtifactName: Binaries
         publishLocation: 'FilePath'
-        TargetPath: '$(Build.ArtifactStagingDirectory)/MyCustomFolder/Binaries'
+        TargetPath: '$(Build.ArtifactStagingDirectory)/MyCustomFolder/$(ArtifactName)'
