@@ -37,11 +37,10 @@ stages:
         projects: $(Build.SourcesDirectory)/products_catalogue.sln
         verbosityRestore: Minimal
 
-    - task: VSBuild@1
+    - task: MSBuild@1
       displayName: 'Build solution'
       inputs:
         solution: $(Build.SourcesDirectory)/products_catalogue.sln
-        msbuildArgs: /v:m
         platform: 'Any CPU'
         configuration: 'Release'
         maximumCpuCount: true
