@@ -60,25 +60,29 @@ stages:
         includeRootFolder: false
         archiveFile: $(Build.ArtifactStagingDirectory)/Binaries/Binaries.zip
 
-    - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifact: Binaries'
-      inputs:
-        PathtoPublish: $(Build.ArtifactStagingDirectory)/Binaries
-        ArtifactName: Binaries
-        publishLocation: 'Container'
-        TargetPath: '$(Build.ArtifactStagingDirectory)/publish'
-    # - task: PublishPipelineArtifact@1
+    # - task: PublishBuildArtifacts@1
+    #   displayName: 'Publish Artifact: Binaries'
     #   inputs:
-    #     targetPath: $(Build.ArtifactStagingDirectory)/Binaries
-    #     artifact: 'Binaries'
-    #     publishLocation: 'filepath'
-    #     fileSharePath: '/publish'
-          
-    - task: DownloadFileshareArtifacts@1
+    #     PathtoPublish: $(Build.ArtifactStagingDirectory)/Binaries
+    #     ArtifactName: Binaries
+    #     publishLocation: 'Container'
+    #     TargetPath: '$(Build.ArtifactStagingDirectory)/publish'
+    - task: PublishPipelineArtifact@1
+      displayName: 'Publish Artifact'
       inputs:
-        filesharePath: '$(Build.ArtifactStagingDirectory)/publish'
+        targetPath: '$(Build.ArtifactStagingDirectory)/artifacts'
         artifactName: 'Binaries'
-        downloadPath: '$(System.ArtifactsDirectory)'
+
+    - task: DownloadPipelineArtifact@2
+      displayName: 'Download Artifact'
+      inputs:
+        artifactName: 'Binaries'
+        targetPath: '$(Pipeline.Workspace)/artifacts'     
+    # - task: DownloadFileshareArtifacts@1
+    #   inputs:
+    #     filesharePath: '$(Build.ArtifactStagingDirectory)/publish'
+    #     artifactName: 'Binaries'
+    #     downloadPath: '$(System.ArtifactsDirectory)'
 
     - task: ExtractFiles@1
       displayName: 'Extract Binaries'
