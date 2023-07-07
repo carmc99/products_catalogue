@@ -37,7 +37,7 @@ stages:
         projects: $(Build.SourcesDirectory)/products_catalogue.sln
         verbosityRestore: Minimal
 
-    - task: MSBuild@1
+    - task: VSBuild@1
       displayName: 'Build solution'
       inputs:
         solution: $(Build.SourcesDirectory)/products_catalogue.sln
