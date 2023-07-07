@@ -6,7 +6,7 @@ trigger:
 - none
 
 pool:
-  name: "Self hosted agent"
+  name: "Default"
   
 resources:
 - repo: self
