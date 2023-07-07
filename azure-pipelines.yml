@@ -77,7 +77,7 @@ stages:
       displayName: 'Download Artifact'
       inputs:
         artifactName: 'Binaries'
-        targetPath: '$(Pipeline.Workspace)/artifacts'     
+        targetPath: '$(Pipeline.Workspace)/Binaries'     
     # - task: DownloadFileshareArtifacts@1
     #   inputs:
     #     filesharePath: '$(Build.ArtifactStagingDirectory)/publish'
@@ -87,5 +87,5 @@ stages:
     - task: ExtractFiles@1
       displayName: 'Extract Binaries'
       inputs:
-        archiveFilePatterns: '$(Build.ArtifactStagingDirectory)/artifacts/Binaries.zip'
+        archiveFilePatterns: '$(Pipeline.Workspace)/Binaries/Binaries.zip'
         destinationFolder: '$(Build.ArtifactStagingDirectory)/Binaries/Extracted'
