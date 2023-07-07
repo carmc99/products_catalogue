@@ -72,7 +72,7 @@ stages:
         targetPath: '$(Pipeline.Workspace)'
         artifact: 'Binaries'
         publishLocation: 'filepath'
-        fileSharePath: '$(Build.ArtifactStagingDirectory)/publish'
+        fileSharePath: '/publish'
           
     - task: DownloadFileshareArtifacts@1
       inputs:
