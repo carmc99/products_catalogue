@@ -23,11 +23,6 @@ stages:
     steps:
     - task: NuGetToolInstaller@1
       displayName: 'Use NuGet'
-
-    - task: NuGetAuthenticate@1
-      inputs:
-        nuGetServiceConnections: 'External Artifacts, Release Artifacts'
-        forceReinstallCredentialProvider: true
    
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
