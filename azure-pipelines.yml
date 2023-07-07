@@ -59,13 +59,20 @@ stages:
         rootFolder:  $(Build.BinariesDirectory)/Common
         includeRootFolder: false
         archiveFile: $(Build.ArtifactStagingDirectory)/Binaries/Binaries.zip
-    - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifact: Binaries'
+
+    # - task: PublishBuildArtifacts@1
+    #   displayName: 'Publish Artifact: Binaries'
+    #   inputs:
+    #     PathtoPublish: $(Build.ArtifactStagingDirectory)/Binaries
+    #     ArtifactName: Binaries
+    #     publishLocation: 'FilePath'
+    #     TargetPath: '$(Build.ArtifactStagingDirectory)/publish'
+    - task: PublishPipelineArtifact@1
       inputs:
-        PathtoPublish: $(Build.ArtifactStagingDirectory)/Binaries
-        ArtifactName: Binaries
-        publishLocation: 'FilePath'
-        TargetPath: $(Build.ArtifactStagingDirectory)/publish
+        targetPath: '$(Pipeline.Workspace)'
+        artifact: 'Binaries'
+        publishLocation: 'filepath'
+        fileSharePath: '$(Build.ArtifactStagingDirectory)/publish'
           
     - task: DownloadFileshareArtifacts@1
       inputs:
