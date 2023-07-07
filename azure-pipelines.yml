@@ -77,4 +77,4 @@ stages:
       displayName: 'Extract Binaries'
       inputs:
         archiveFilePatterns: '$(Build.ArtifactStagingDirectory)/Binaries/Binaries.zip'
-        destinationFolder: '$(Build.ArtifactStagingDirectory)/publish/Extracted'
+        destinationFolder: '$(Build.ArtifactStagingDirectory)/Binaries/Extracted'
