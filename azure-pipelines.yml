@@ -65,7 +65,7 @@ stages:
         PathtoPublish: $(Build.ArtifactStagingDirectory)/Binaries
         ArtifactName: Binaries
         publishLocation: 'FilePath'
-        TargetPath: '$(Build.ArtifactStagingDirectory)/publish'
+        TargetPath: $(Build.ArtifactStagingDirectory)/publish
   
     - download: current
       displayName: 'Download Binaries'
