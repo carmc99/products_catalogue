@@ -66,11 +66,13 @@ stages:
         ArtifactName: Binaries
         publishLocation: 'FilePath'
         TargetPath: $(Build.ArtifactStagingDirectory)/publish
-  
-    - download: current
-      displayName: 'Download Binaries'
-      artifact: Binaries
-    
+          
+    - task: DownloadFileshareArtifacts@1
+      inputs:
+        filesharePath: '$(Build.ArtifactStagingDirectory)/publish'
+        artifactName: 'Binaries'
+        downloadPath: '$(System.ArtifactsDirectory)'
+
     - task: ExtractFiles@1
       displayName: 'Extract Binaries'
       inputs:
