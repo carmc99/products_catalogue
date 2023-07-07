@@ -87,5 +87,5 @@ stages:
     - task: ExtractFiles@1
       displayName: 'Extract Binaries'
       inputs:
-        archiveFilePatterns: '$(Build.ArtifactStagingDirectory)/Binaries/Binaries.zip'
+        archiveFilePatterns: '$(Build.ArtifactStagingDirectory)/artifacts/Binaries.zip'
         destinationFolder: '$(Build.ArtifactStagingDirectory)/Binaries/Extracted'
