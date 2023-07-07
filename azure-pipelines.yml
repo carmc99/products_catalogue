@@ -59,3 +59,10 @@ stages:
         rootFolder:  $(Build.BinariesDirectory)/Common
         includeRootFolder: false
         archiveFile: $(Build.ArtifactStagingDirectory)/Binaries/Binaries.zip
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact: Binaries'
+      inputs:
+        PathtoPublish: $(Build.ArtifactStagingDirectory)/Binaries
+        ArtifactName: Binaries
+        publishLocation: 'FilePath'
+        TargetPath: '$(Build.ArtifactStagingDirectory)/MyCustomFolder/Binaries'
