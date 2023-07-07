@@ -62,7 +62,7 @@ stages:
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact: Binaries'
       inputs:
-        PathtoPublish: $(Build.ArtifactStagingDirectory)/Binaries
+        PathtoPublish: $(Build.ArtifactStagingDirectory)/Binaries/Binaries.zip
         ArtifactName: Binaries
         publishLocation: 'FilePath'
-        TargetPath: '$(Build.ArtifactStagingDirectory)'
+        TargetPath: '$(Build.ArtifactStagingDirectory)/publish'
