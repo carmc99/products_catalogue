@@ -46,3 +46,16 @@ stages:
         maximumCpuCount: true
         msbuildArchitecture: x64
         logProjectEvents: false
+    - task: CopyFiles@2
+      displayName: 'Copy files'
+      inputs:
+        SourceFolder: $(Build.SourcesDirectory)/products_catalogue/bin
+        Contents: |
+          **/*
+        TargetFolder: $(Build.BinariesDirectory)/Common
+    - task: ArchiveFiles@1
+      displayName: 'Common Binaries - Archive'
+      inputs:
+        rootFolder:  $(Build.BinariesDirectory)/Common
+        includeRootFolder: false
+        archiveFile: $(Build.ArtifactStagingDirectory)/Binaries/Binaries.zip
