@@ -25,10 +25,11 @@ stages:
       displayName: 'Use NuGet'
    
  
-    - task: CmdLine@2
+    - task: PowerShell@2
       inputs:
+        targetType: 'inline'
         script: |
-          echo $(Build.SourceTfvcShelveset)
+          Write-Host "Team Foundation Server URL: $(System.TeamFoundationServerUri)"
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
       inputs:
