@@ -28,8 +28,7 @@ stages:
     - task: CmdLine@2
       inputs:
         script: |
-          echo Write your commands here
-          echo %Build.SourceTfvcShelveset%
+          echo $(Build.SourceTfvcShelveset)
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
       inputs:
