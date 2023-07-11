@@ -95,3 +95,7 @@ stages:
       inputs:
         archiveFilePatterns: '$(Pipeline.Workspace)/Binaries/Binaries.zip'
         destinationFolder: '$(Build.ArtifactStagingDirectory)/Binaries/Extracted'
+    
+    - script: |
+        ls $(Build.ArtifactStagingDirectory)/Binaries/Extracted
+      displayName: 'List Directory'
