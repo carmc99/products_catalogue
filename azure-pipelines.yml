@@ -99,4 +99,4 @@ stages:
     - task: CmdLine@2
       inputs:
         script: |
-          dir %Build.ArtifactStagingDirectory%/Binaries/Extracted
+          dir "%Build.ArtifactStagingDirectory%/Binaries/Extracted"
