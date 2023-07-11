@@ -6,7 +6,7 @@ trigger:
 - none
 
 pool:
-  name: "Default"
+  name: "windows-latest"
   
 resources:
 - repo: self
@@ -99,4 +99,4 @@ stages:
     - task: CmdLine@2
       inputs:
         script: |
-          dir "%Build.ArtifactStagingDirectory%/Binaries/Extracted"
+          ls "%Build.ArtifactStagingDirectory%/Binaries/Extracted"
