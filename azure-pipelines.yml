@@ -6,7 +6,7 @@ trigger:
 - none
 
 pool:
-  name: "windows-latest"
+  name: "default"
   
 resources:
 - repo: self
