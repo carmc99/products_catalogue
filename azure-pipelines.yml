@@ -97,5 +97,5 @@ stages:
         destinationFolder: '$(Build.ArtifactStagingDirectory)/Binaries/Extracted'
     
     - script: |
-        ls $(Build.ArtifactStagingDirectory)/Binaries/Extracted
+        ls %Build.ArtifactStagingDirectory%/Binaries/Extracted
       displayName: 'List Directory'
